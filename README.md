@@ -1,2 +1,2 @@
 # hibernate-practice
-hibernate框学习实践
+hibernate框架学习实践
