@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory>
+ 
+  <!-- 配置数据库的基本信息 -->
+  <property name="connection.username">root</property>
+  <property name="connection.password"/>
+  <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="connection.url">jdbc:mysql:///hibernate1</property>
+  
+  <!-- 配置 hibernate 的基本信息 
+  	hibernate 所使用的数据库方言 
+ 	坑：MySQL5 -->
+  <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+  <!-- 执行操作时是否在控制台打印 SQL -->
+  <property name="show_sql">true</property>
+  <!-- 是否对 SQL 进行格式化 -->
+  <property name="format_sql">true</property>
+  <!-- 指定自动生成表的策略 -->
+  <property name="hbm2ddl.auto">update</property>
+  
+  <property name="hibernate.use_identifier_rollback">ture</property>
+  
+  <!-- ORM 映射关系 指定关联的 .hbm.xml 文件 -->
+  <mapping resource="cn/zyf/hibernate/helloworld/News.hbm.xml"/>
+  
+ </session-factory>
+</hibernate-configuration>

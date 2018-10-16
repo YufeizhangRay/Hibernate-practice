@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 4, 2018 5:33:51 PM by Hibernate Tools 3.5.0.Final -->
+
+<hibernate-mapping package="cn.zyf.hibernate.strategy">
+
+    <class name="Customer" table="CUSTOMERS" lazy="true" batch-size="5">
+    
+        <id name="customerId" type="java.lang.Integer">
+            <column name="CUSTOMER_ID" />
+            <generator class="native" />
+        </id>
+        
+        <property name="customerName" type="java.lang.String">
+            <column name="CUSTOMER_NAME" />
+        </property>
+        
+        <set name="orders" table="ORDERS" 
+        	inverse="true" order-by="ORDER_NAME DESC" lazy="true"
+        	batch-size="2" fetch="select">
+        	<key column="CUSTOMER_ID"></key>
+        	<one-to-many class="Order"/>
+        </set>
+        
+    </class>
+    
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 6, 2018 9:47:08 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+
+    <class name="cn.zyf.hibernate.entities.Employee" table="ZYF_EMPLOYEE">
+     	<!-- 
+    	<cache usage="read-write"/>
+    	 -->
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        
+        <property name="salary" type="java.lang.Float">
+            <column name="SALARY" />
+        </property>
+        
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        
+        <many-to-one name="department" class="cn.zyf.hibernate.entities.Department" fetch="join">
+            <column name="DEPARTMENT_ID" />
+        </many-to-one>
+        
+    </class>
+    
+    <query name="salaryEmps"><![CDATA[FROM Employee e WHERE e.salary > :minSal AND e.salary < :maxSal]]></query>
+    
+</hibernate-mapping>

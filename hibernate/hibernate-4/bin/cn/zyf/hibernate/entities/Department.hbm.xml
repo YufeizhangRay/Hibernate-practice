@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 6, 2018 9:47:08 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+
+    <class name="cn.zyf.hibernate.entities.Department" table="ZYF_DEPARTMENT">
+    	
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        
+        <set name="empolyees" table="ZYF_EMPLOYEE" inverse="true" lazy="true">
+            <key>
+                <column name="DEPARTMENT_ID" />
+            </key>
+            <one-to-many class="cn.zyf.hibernate.entities.Employee" />
+        </set>
+        
+    </class>
+    
+</hibernate-mapping>

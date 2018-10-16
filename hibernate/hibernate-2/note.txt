@@ -1,0 +1,54 @@
+1.在 hibernate 中使用 C3P0 数据源
+
+1).导入 jar 包
+
+hibernate-release-5.3.1.Final/lib/optional/c3p0/*.jar
+
+2).加入配置
+
+hibernate.c3p0.max_size:数据库连接池最大连接数
+hibernate.c3p0.min_size:数据库连接池最小连接数
+hibernate.c3p0.acquire_increment:当数据库连接池中的连接耗尽时，同一时刻获取多少个数据库连接
+
+hibernate.c3p0.timeout：数据库连接池中连接对象在多长时间没有使用过后应该被销毁
+hibernate.c3p0.idle_test_period:连接池检测线程多长时间检测一次池内所有连接对象是否超时
+连接池本身不会把自己从连接池中删除，而是专门有个线程按照一定的时间间隔来做这件事
+这个线程通过比较连接对象最后一次被使用时间和当前时间差来和 timeout 作对比，进而决定是否销毁这个对象
+hibernate.c3p0.max_statements:缓存 Statement 对象的数量
+
+2.映射 Java 的时间，日期类型
+
+1).两个基础知识:
+
+①在 Java 中，代表日期和时间的类型包括: java.util.Date 和 java.util.calender
+此外，在 JDBC API 中还提供了 3 个扩展了 java.util.Date 类的子类: java.sql.Date java.sql.Time
+和 java.sql.Timestamp，这 3 个类分别和标准 SQL 类型中的 DATE，TIME, TIMESTAMP 类型对应
+
+②在标准 SQL 类型中， DATE 类型表示日期，TIME 类型表示时间，TIMESTAMP 类型表示时间戳，同时包含日期和时间信息
+
+2).如何进行映射？
+
+①因为 java.util.Date 是 java.sql.Date java.sql.Time 和 java.sql.Timestamp 三个类的父类，所以
+java.util.Date 可以对应标准 SQL 类型中的 DATE，TIME, TIMESTAMP 类型
+
+②基于①所以在设计持久化类的类型时设计为 java.util.Date
+
+③如何把 java.util.Date 映射为 DATE，TIME, TIMESTAMP？
+
+可以通过 property 的 type 属性来进行映射；
+
+例如:
+
+        <property name="date" type="timestamp">
+            <column name="DATE" />
+        </property>
+        
+		<property name="date" type="date">
+            <column name="DATE" />
+        </property>
+        
+        <property name="date" type="time">
+            <column name="DATE" />
+        </property>
+
+其中 timestamp date time 既不是 Java 类型 也不是标准 SQL 类型，而是 hibernate 映射类型

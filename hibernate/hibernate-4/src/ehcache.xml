@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true" monitoring="autodetect"
+         dynamicConfig="true">
+
+    <!-- 
+    	指定一个目录：当 EHcache 把数据写到硬盘上时，将把数据写到这个目录下
+     -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <!-- 
+    	设置缓存的默认的数据过期策略
+     -->
+    <defaultCache
+            maxEntriesLocalHeap="10000"
+            maxEntriesLocalDisk="10000000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            diskSpoolBufferSizeMB="30"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+
+    <!-- 
+    	设定具体的命名缓存的数据过期策略 每个命名缓存表代表一个缓存区域
+    	缓存区域(region):一个具有名称的缓存块，可以给每一个缓存块设定不同的缓存策略
+    	如果没有设置任何的缓存区域，则所有被缓存的对象，都将使用默认的缓存策略
+    	hibernate 在不同的缓存区域保存不同的类/集合
+    		对于类而言，区域的名称是类名 如: cn.zyf.hibernate.entities.Employee
+    		对于集合而言，区域的名称是类名加属性名 如: cn.zyf.hibernate.entities.Department.employees
+     -->
+     <!-- 
+     	name:设置缓存的名字，它的取值为类的全限定名或类的集合的名字
+     	maxEntriesLocalHeap:内存中缓存最大的对象数量
+     	maxEntriesLocalDisk:磁盘中缓存最大的对象数量
+     	eternal:设置对象是否为永久的，true 标识永不过期，此时将忽略 timeToIdleSeconds 和 timeToIdleSeconds属性；默认值是 false
+     	diskSpoolBufferSizeMB: DiskStore 使用的磁盘大小，默认值 30 MB，每个 cache 使用各自的 DiskStore
+     	timeToIdleSeconds:设置对象空闲最长时间，以秒为单位，超过这个时间，对象过期。
+     					  当对象过期时 EHcache 会把它从缓存中清除,如果此时值为0，表示对象可以无限期的处于空闲状态
+     	timeToLiveSeconds:设置对象生存最长时间，以秒为单位，超过这个时间，对象过期。
+     					  如果此时值为0，表示对象可以无限期的存在于缓存中。该值必须大于或等于 timeToIdleSeconds 属性值
+     	memoryStoreEvictionPolicy: 内存中的数据超过限制，向磁盘缓存时策略，默认 LRU
+     	transactionalMode:
+      -->
+    <cache name="cn.zyf.hibernate.entities.Employee"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+
+    <cache name="cn.zyf.hibernate.entities.Department.employees"
+           maxEntriesLocalHeap="1000"
+           eternal="true"
+           memoryStoreEvictionPolicy="FIFO"
+            />
+
+    <!--
+    Sample distributed cache named sampleReplicatedCache1.
+    This cache replicates using defaults.
+    It also bootstraps from the cluster, using default properties.
+    -->
+    <cache name="sampleReplicatedCache1"
+           maxEntriesLocalHeap="10"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="100">
+
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
+    </cache>
+
+    <!--
+    Sample distributed cache named sampleReplicatedCache2.
+    This cache replicates using specific properties.
+    It only replicates updates and does so synchronously via copy
+    -->
+    <cache name="sampleRepicatedCache2"
+           maxEntriesLocalHeap="10"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="100">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=false,
+                            replicatePutsViaCopy=false, replicateUpdates=true,
+                            replicateUpdatesViaCopy=true, replicateRemovals=false"/>
+    </cache>
+
+    <!--
+    Sample distributed cache named sampleReplicatedCache3.
+    This cache replicates using defaults except that the asynchronous replication
+    interval is set to 200ms.
+    This one includes / and # which were illegal in ehcache 1.5.
+    -->
+    <cache name="sampleReplicatedCache3"
+           maxEntriesLocalHeap="10"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="100">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="asynchronousReplicationIntervalMillis=200"/>
+        <persistence strategy="localTempSwap"/>
+    </cache>
+
+</ehcache>
