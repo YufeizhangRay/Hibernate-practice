@@ -1,5 +1,5 @@
 # hibernate-practice
-hibernate框架学习实践
+Hibernate框架学习实践
 
 2018年5月 
 
