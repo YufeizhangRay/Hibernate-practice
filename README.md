@@ -9,5 +9,5 @@ Hibernate框架学习实践
 
 相对于另一个十分受欢迎的`ORM`框架`Mybatis`，`Hibernate`拥有更高的自动化级别(可以说`Hibernate`是全自动`ORM`框架，`Mybatis`是半自动`ORM`框架，二者各有利弊，但是就面向对象而言，`Hibernate`是最好的`ORM`框架)。其自带的`HQL`(`Hibernate Query Language`是`Hibernate`自己的查询语句，它与`SQL`相似，但是`HQL`是`面向对象`的，它引用`类名`及`类的属性名`，而不是`表名`及`表的字段名`)可以让开发者不用编写`SQL`语句(但是也支持使用`SQL`语句)来对数据库进行操作。同时`Hibernate`在切换数据库上面也相较`Mybatis`更为简单，只需要在`hibernate.cfg.xml`配置文件中修改对应的方言(`hibernate.dialect`)即可。
   
-Hibernate就写这么多吧，这个东西我真的就是会用而已，底层不了解，因为我主打是Mybaits。见谅
+Hibernate底层原理不是很了解，平时用的是Mybaits。
 
