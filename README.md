@@ -1,8 +1,6 @@
 # hibernate-practice
 Hibernate框架学习实践
 
-2018年5月 
-
 学习的第一个`Java`相关的`ORM`框架  
   
 `Hibernate`是一个开源的`ORM`(即`Object-Relation Mapping`是对象-关系映射)框架，底层对`JDBC`进行了封装，可以使开发者更容易的运用`面向对象`思维操作数据库。只需在`hibernate.cfg.xml`配置文件中指明需要扫描的包，`Hibernate`就会自动识别并解析`XXX.hbm.xml`关系映射文件，使`Bean类及其属性`与`数据表及其字段相对应`，并且发出`SQL`语句(可以在`hibernate.cfg.xml`配置文件中配置打印`SQL`语句)在数据库中自动创建对应的数据表(而`Mybatis`的`mbg`(`MyBatis Generator`)则相反，可以通过数据表及其字段自动创建用于生成对象的`Bean类`以及`接口`和对应的`Mapper文件`)。  
