@@ -15,6 +15,15 @@ Hibernate的配置文件：
   
 `Hibernate`在使用中需要注意的问题：  
 在利用`HQL`语句进行数据库操作的时候，里面的参数并不是数据表名与字段名，而是`POJO`的`类名`和`属性名`。  
+
+优化`Hibernate`所鼓励的7大措施：  
+>1.尽量使用`many-to-one`，避免使用单项`one-to-many`  
+2.灵活使用单向`one-to-many`  
+3.不用`one-to-one`，使用多`many-to-one`代替  
+4.配置对象缓存，不使用集合缓存  
+5.`one-to-many`使用Bag，`many-to-one`使用Set  
+6.继承使用显示多态 `HQL:from object polymorphism="exlicit"` 避免查处所有对象  
+7.消除大表，使用二级缓存  
   
 JPA：  
 `Hibernate`还可以使用`JPA`来减少`Dao`层的代码量，`JPA`中自带的方法满足了我们的大部分需求，同时注解形式也使我们可以不再去配置`xml`文件，使项目起来来更加的简洁。
